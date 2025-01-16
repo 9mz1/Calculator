@@ -45,10 +45,9 @@ function main() {
             
             if (currentValue !== '') {
                 if (previousValue !== '' && operator) {
-                    // If there's an existing calculation, perform it first
                     calculate();
                 } else {
-                    previousValue = currentValue; // Store current value
+                    previousValue = currentValue;
                 }
             }
             operator = btn.textContent;
