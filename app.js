@@ -43,12 +43,10 @@ function main() {
     btnOperator.forEach((btn) => {
         btn.addEventListener("click", () => {
             
-            if (currentValue !== '') {
-                if (previousValue !== '' && operator) {
+            if (currentValue !== '' && previousValue !== '' && operator !== '') {
                     calculate();
-                } else {
-                    previousValue = currentValue;
-                }
+            }else {
+                previousValue = currentValue;
             }
             operator = btn.textContent;
             smallDisplay.textContent = previousValue;
