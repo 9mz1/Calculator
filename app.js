@@ -12,45 +12,59 @@ let operator = '';
 let result = '';
 // let output = ''
 
-function calculate() {
-    let num1 = parseFloat(previousValue);
-    let num2 = parseFloat(currentValue);
+function main() {
+    function calculate() {
+        let num1 = parseFloat(previousValue);
+        let num2 = parseFloat(currentValue);
 
-    if (operator ==='+') {
-        result =  num1 + num2;
-    } else if (operator === '-') {
-        result = num1 - num2;
-    } else if (operator === '*') {
-        result = num1 * num2;
-    } else if (operator === '/') {
-        result = num1 / num2;
+        if (operator ==='+') {
+            result =  num1 + num2;
+        } else if (operator === '-') {
+            result = num1 - num2;
+        } else if (operator === '*') {
+            result = num1 * num2;
+        } else if (operator === '/') {
+            result = num1 / num2;
+        }
+        display.textContent = result.toString();
+        currentValue = '';
+        operator = null;
+        previousValue = result.toString();
     }
-    display.textContent = result.toString();
-    currentValue = '';
-    operator = null;
-    previousValue = result.toString();
-}
 
-btnNum.forEach((btn) => {
-    btn.addEventListener("click", () => {
-        currentValue += btn.textContent;
-        display.textContent = currentValue;
-       
+    btnNum.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            currentValue += btn.textContent;
+            display.textContent = currentValue;
+        
+        })
     })
-})
 
-btnOperator.forEach((btn) => {
-    btn.addEventListener("click", () => {
-        operator = btn.textContent;
-        previousValue = currentValue;
-        smallDisplay.textContent = previousValue;
+    btnOperator.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            
+            if (currentValue !== '') {
+                if (previousValue !== '' && operator) {
+                    // If there's an existing calculation, perform it first
+                    calculate();
+                } else {
+                    previousValue = currentValue; // Store current value
+                }
+            }
+            operator = btn.textContent;
+            smallDisplay.textContent = previousValue;
+            currentValue = '';
+        })
+    })
+
+    clearBtn.addEventListener("click", () => {
+        display.textContent = "0";
         currentValue = '';
     })
-})
 
-clearBtn.addEventListener("click", () => {
-    display.textContent = "0";
-    currentValue = '';
-})
+    equalsBtn.addEventListener("click", () => {
+        calculate();
+    })
+}
 
-equalsBtn.addEventListener("click", calculate);
+main();
