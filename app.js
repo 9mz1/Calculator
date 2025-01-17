@@ -3,6 +3,7 @@ const smallDisplay = document.querySelector('#small-display');
 const btnNum = document.querySelectorAll(".number");
 const btnOperator = document.querySelectorAll(".operator");
 const clearBtn = document.querySelector("#clear-btn");
+const backspaceBtn = document.querySelector("#backspace-btn");
 const equalsBtn = document.querySelector("#equals-btn");
 const decimalBtn = document.querySelector("#decimal-btn");
 
@@ -52,6 +53,7 @@ function main() {
                 previousValue = currentValue;
             }
             operator = btn.textContent;
+            btn.style.backgroundColor = '#292929';
             smallDisplay.textContent = previousValue;
             currentValue = '';
         })
@@ -59,9 +61,25 @@ function main() {
 
     clearBtn.addEventListener("click", () => {
         display.textContent = "0";
+        smallDisplay.textContent = "";
         currentValue = '';
         previousValue = '';
         decimalBtn.disabled = false;
+    })
+
+    backspaceBtn.addEventListener("click", () => {
+        currentValue = currentValue.split("");
+        currentValue.pop();
+        currentValue = currentValue.join("");
+        console.log(currentValue);
+        if (currentValue.includes('.')) {
+            decimalBtn.disabled = true;
+        } else {
+            decimalBtn.disabled = false;
+        }
+        
+        display.textContent = currentValue;
+        smallDisplay.textContent = "";
     })
 
     equalsBtn.addEventListener("click", () => {
