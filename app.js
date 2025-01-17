@@ -25,6 +25,8 @@ function main() {
             result = num1 * num2;
         } else if (operator === '/') {
             result = num1 / num2;
+        } else if (operator === '%') {
+            result = num1 % num2;
         }
         display.textContent = result.toString();
         currentValue = '';
@@ -57,10 +59,19 @@ function main() {
     clearBtn.addEventListener("click", () => {
         display.textContent = "0";
         currentValue = '';
+        previousValue = '';
     })
 
     equalsBtn.addEventListener("click", () => {
-        calculate();
+        if (currentValue === '0' || previousValue === '0' && operator === '/') {
+            display.textContent = 'youre so dumb';
+            currentValue = '';
+            previousValue = '';
+        } else {
+            calculate();
+            currentValue = '';
+            previousValue = '';
+        }
     })
 }
 
