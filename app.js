@@ -1,9 +1,10 @@
-display = document.querySelector("#display");
-smallDisplay = document.querySelector('#small-display');
-btnNum = document.querySelectorAll(".number");
-btnOperator = document.querySelectorAll(".operator");
-clearBtn = document.querySelector("#clear-btn");
-equalsBtn = document.querySelector("#equals-btn");
+const display = document.querySelector("#display");
+const smallDisplay = document.querySelector('#small-display');
+const btnNum = document.querySelectorAll(".number");
+const btnOperator = document.querySelectorAll(".operator");
+const clearBtn = document.querySelector("#clear-btn");
+const equalsBtn = document.querySelector("#equals-btn");
+const decimalBtn = document.querySelector("#decimal-btn");
 
 
 let currentValue = '';
@@ -18,15 +19,15 @@ function main() {
         let num2 = parseFloat(currentValue);
 
         if (operator ==='+') {
-            result =  num1 + num2;
+            result = Math.round((num1 + num2) * 100) / 100
         } else if (operator === '-') {
-            result = num1 - num2;
+            result = Math.round((num1 - num2) * 100) / 100;
         } else if (operator === '*') {
-            result = num1 * num2;
+            result = Math.round((result = num1 * num2) * 100) / 100
         } else if (operator === '/') {
-            result = num1 / num2;
+            result = Math.round((result = num1 / num2) * 100) / 100
         } else if (operator === '%') {
-            result = num1 % num2;
+            result = Math.round((result = num1 % num2) * 100) / 100
         }
         display.textContent = result.toString();
         currentValue = '';
@@ -60,10 +61,11 @@ function main() {
         display.textContent = "0";
         currentValue = '';
         previousValue = '';
+        decimalBtn.disabled = false;
     })
 
     equalsBtn.addEventListener("click", () => {
-        if (currentValue === '0' || previousValue === '0' && operator === '/') {
+        if (previousValue === '0' && operator === '/') {
             display.textContent = 'youre so dumb';
             currentValue = '';
             previousValue = '';
@@ -71,6 +73,16 @@ function main() {
             calculate();
             currentValue = '';
             previousValue = '';
+        }
+        decimalBtn.disabled = false;
+    })
+
+    decimalBtn.addEventListener("click", () => {
+        if (!currentValue.includes('.') && currentValue !== '') {
+            currentValue += decimalBtn.textContent;
+            display.textContent = currentValue;
+        } else {
+            decimalBtn.disabled = true;
         }
     })
 }
